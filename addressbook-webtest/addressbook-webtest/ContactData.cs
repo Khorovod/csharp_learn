@@ -10,12 +10,12 @@ namespace WebAddressbookTests
     {
         private string firstname;
         private string lastname;
-        private string middlename = "";
+        private string middlename = "Отчество!";
 
         public ContactData(string firstname, string lastname)
         {
             this.firstname = firstname;
-            this.lastname = lastname;
+            this.lastname = lastname;    
         }
 
         public string Firstname
@@ -43,5 +43,18 @@ namespace WebAddressbookTests
                 lastname = value;
             }
         }
+        public string Middlename
+        {
+            get
+            {
+                return middlename;
+            }
+
+            set
+            {
+                middlename = value;
+            }
+        }
     }
 }
+    
