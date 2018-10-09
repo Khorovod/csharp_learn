@@ -13,10 +13,10 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            navigationHelper.OpenHomePage();
-            loginHelper.Login(new AccountData("admin", "secret"));
+            app.Navigator.OpenHomePage();
+            app.Auth.Login(new AccountData("admin", "secret"));
 
-            loginHelper.Logout();
+            app.Auth.Logout();
         }
 
     }
