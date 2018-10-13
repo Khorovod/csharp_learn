@@ -18,8 +18,8 @@ namespace WebAddressbookTests
             {
                 GroupData NewGroupData = new GroupData("изменить имя")
                 {
-                    Header = "изменить заголовок",
-                    Footer = "изменить футер"
+                    Header = "хэдэр",
+                    Footer = "футэр"
                 };
 
                 app.Groups.Modify(1, NewGroupData);

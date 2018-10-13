@@ -25,10 +25,10 @@ namespace WebAddressbookTests
             app.Contacts.Create(contact);
         }
 
-       /* [Test]
+        /*[Test]
         public void EmptyContactCreationTest()
         {
-            ContactData contact = new ContactData("", "", "", "");
+            ContactData contact = new ContactData("", "", "", null);
 
             app.Contacts.Create(contact);
         }*/
