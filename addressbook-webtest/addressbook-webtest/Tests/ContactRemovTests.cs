@@ -13,11 +13,17 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            app.Navigator.OpenHomePage();
-            app.Auth.Login(new AccountData("admin", "secret"));
+            app.Contacts.RemoveFirstContact(1);
+            app.Contacts.ApproveContactDeletion();    
 
-            app.Auth.Logout();
         }
+        [Test]
+        public void DeclineContactRemovalTest()
+        {
+            app.Contacts.RemoveFirstContact(1);
+            app.Contacts.DeclineContactDeletion();
+        }
+
 
     }
 }
