@@ -18,13 +18,6 @@ namespace WebAddressbookTests
             this.firstname = firstname;
         }
 
-        /*public ContactData(string firstname, string lastname, string middlename)
-        {//будет ли дублированием?
-            this.firstname = firstname;
-            this.lastname = lastname;
-            this.middlename = middlename;
-        }*/
-
         public ContactData(string firstname, string lastname, string middlename, string photo)
         {
         this.firstname = firstname;
