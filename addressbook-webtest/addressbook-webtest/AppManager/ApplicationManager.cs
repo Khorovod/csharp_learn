@@ -50,7 +50,6 @@ namespace WebAddressbookTests
         {
             if (! app.IsValueCreated)
             {
-
                 app.Value = new ApplicationManager();
             }
             return app.Value;
@@ -64,7 +63,6 @@ namespace WebAddressbookTests
             }
         }
         
-
         public LoginHelper Auth
         {
             get
