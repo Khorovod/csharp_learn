@@ -50,6 +50,15 @@ namespace WebAddressbookTests
 
         public GroupHelper SelectGroup(int index)
         {
+            if (! IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
+            {
+                GroupData groupData = new GroupData("Группа подхвата");
+
+                InitGroupCreation();
+                FillGroupForm(groupData);
+                SubmitGroupCreation();
+                manager.Navigator.ReturnToGroupsPage();
+            }
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
         }

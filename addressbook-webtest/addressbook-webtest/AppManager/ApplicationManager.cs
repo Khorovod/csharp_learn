@@ -33,6 +33,7 @@ namespace WebAddressbookTests
             contactHelper = new ContactHelper(this);
 
         }
+
         ~ApplicationManager()
         {
             try
@@ -50,11 +51,13 @@ namespace WebAddressbookTests
         {
             if (! app.IsValueCreated)
             {
-
-                app.Value = new ApplicationManager();
+                ApplicationManager newInstance = new ApplicationManager();
+                newInstance.Navigator.OpenHomePage();
+                app.Value = newInstance;
             }
             return app.Value;
         }
+
 
         public IWebDriver Driver
         {
@@ -64,7 +67,6 @@ namespace WebAddressbookTests
             }
         }
         
-
         public LoginHelper Auth
         {
             get

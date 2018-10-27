@@ -10,7 +10,7 @@ namespace WebAddressbookTests
     public class GroupModificationTests
     {
         [TestFixture]
-        public class GroupRemovalTests : TestBase
+        public class GroupRemovalTests : AuthTestBase
         {
 
             [Test]
@@ -18,8 +18,8 @@ namespace WebAddressbookTests
             {
                 GroupData NewGroupData = new GroupData("изменить имя")
                 {
-                    Header = "хэдэр",
-                    Footer = "футэр"
+                    Header = null,
+                    Footer = null
                 };
 
                 app.Groups.Modify(1, NewGroupData);

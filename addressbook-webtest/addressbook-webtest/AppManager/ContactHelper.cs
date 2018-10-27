@@ -28,9 +28,10 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(ContactData contact)
+        public ContactHelper Modify(ContactData contact, int d)
         {
             manager.Navigator.GoToContactPage();
+            SelectContact(d);
             InitContactModification();
             FillContactForm(contact);
             SubmitContactModification();
@@ -69,20 +70,15 @@ namespace WebAddressbookTests
 
         public ContactHelper FillContactForm(ContactData contact)
         {
-
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstname);
-
-            driver.FindElement(By.Name("middlename")).Clear();
-            driver.FindElement(By.Name("middlename")).SendKeys(contact.Middlename);
-
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.Lastname);
+            Type(By.Name("firstname"), contact.Firstname);
+            Type(By.Name("lastname"), contact.Lastname);
+            Type(By.Name("middlename"), contact.Middlename);
+            Type(By.Name("photo"), contact.Photo);
 
             //driver.FindElement(By.Name("nickname")).Clear();
             //driver.FindElement(By.Name("nickname")).SendKeys("123");
 
-            driver.FindElement(By.Name("photo")).SendKeys(contact.Photo);
+            //driver.FindElement(By.Name("photo")).SendKeys(contact.Photo);
 
             /*driver.FindElement(By.Name("title")).Click();
             driver.FindElement(By.Name("title")).Clear();
@@ -161,6 +157,15 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact (int index)
         {
+            if (! IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
+            {
+                ContactData contact = new ContactData("Контакт на подхвате");
+
+                InitContactAddition();
+                FillContactForm(contact);
+                SubmitContactAddition();
+                manager.Navigator.GoToContactPage();
+            }
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
         }
