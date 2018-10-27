@@ -28,9 +28,10 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(ContactData contact)
+        public ContactHelper Modify(ContactData contact, int d)
         {
             manager.Navigator.GoToContactPage();
+            SelectContact(d);
             InitContactModification();
             FillContactForm(contact);
             SubmitContactModification();
@@ -156,6 +157,15 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact (int index)
         {
+            if (! IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
+            {
+                ContactData contact = new ContactData("Контакт на подхвате");
+
+                InitContactAddition();
+                FillContactForm(contact);
+                SubmitContactAddition();
+                manager.Navigator.GoToContactPage();
+            }
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
         }
