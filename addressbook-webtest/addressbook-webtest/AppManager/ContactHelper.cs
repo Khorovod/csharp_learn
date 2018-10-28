@@ -28,7 +28,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(ContactData contact, int d)
+        public ContactHelper Modify(int d , ContactData contact)
         {
             manager.Navigator.GoToContactPage();
             SelectContact(d);
@@ -166,7 +166,7 @@ namespace WebAddressbookTests
                 SubmitContactAddition();
                 manager.Navigator.GoToContactPage();
             }
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
 
@@ -214,6 +214,20 @@ namespace WebAddressbookTests
             {
                 acceptNextAlert = true;
             }
+        }
+
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToContactPage();
+            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+
+            foreach (IWebElement element in elements)
+            {
+                contacts.Add(new ContactData(element.Text));
+            }
+            return contacts;
+
         }
     }
 }
