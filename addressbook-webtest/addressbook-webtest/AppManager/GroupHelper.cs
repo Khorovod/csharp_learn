@@ -16,7 +16,6 @@ namespace WebAddressbookTests
 
         }
 
-
         public GroupHelper Create(GroupData group)
         {
             manager.Navigator.GoToGroupsPage();
@@ -51,15 +50,6 @@ namespace WebAddressbookTests
 
         public GroupHelper SelectGroup(int index)
         {
-            if (! IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
-            {
-                GroupData groupData = new GroupData("Группа подхвата");
-
-                InitGroupCreation();
-                FillGroupForm(groupData);
-                SubmitGroupCreation();
-                manager.Navigator.ReturnToGroupsPage();
-            }
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
             return this;
         }
@@ -116,5 +106,12 @@ namespace WebAddressbookTests
             return groups;
 
         }
+
+        public bool IsGroupPresent()
+        {
+             manager.Navigator.GoToGroupsPage();
+             return IsElementPresent(By.XPath("(//input[@name='selected[]'])"));
+        }
+
     }
 }

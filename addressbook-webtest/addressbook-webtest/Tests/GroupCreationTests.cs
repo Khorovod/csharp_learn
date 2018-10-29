@@ -14,18 +14,17 @@ namespace WebAddressbookTests
         [Test]
         public void GroupCreationTest()
         {
-            GroupData group = new GroupData("Имя группы")
-            {
-                Header = "Заголовок",
-                Footer = "Сноски"
-            };
+            GroupData group = new GroupData("qwe", "qwee", "ewqw");
 
             List <GroupData> oldGroups = app.Groups.GetGroupsList();
 
             app.Groups.Create(group);
 
             List<GroupData> newGroups = app.Groups.GetGroupsList();
-            Assert.AreEqual(oldGroups.Count + 1 , newGroups.Count);
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
 
         }
 
@@ -43,7 +42,10 @@ namespace WebAddressbookTests
             app.Groups.Create(group);
 
             List<GroupData> newGroups = app.Groups.GetGroupsList();
-            Assert.AreEqual(oldGroups.Count + 1 , newGroups.Count);
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
 
         [Test]
@@ -60,6 +62,7 @@ namespace WebAddressbookTests
             app.Groups.Create(group);
 
             List<GroupData> newGroups = app.Groups.GetGroupsList();
+
             Assert.AreEqual(oldGroups.Count , newGroups.Count);
         }
     }

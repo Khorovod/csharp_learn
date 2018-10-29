@@ -157,15 +157,6 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact (int index)
         {
-            if (! IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
-            {
-                ContactData contact = new ContactData("Контакт на подхвате");
-
-                InitContactAddition();
-                FillContactForm(contact);
-                SubmitContactAddition();
-                manager.Navigator.GoToContactPage();
-            }
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
@@ -189,8 +180,6 @@ namespace WebAddressbookTests
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
             return this;
         }
-
-
 
         public bool acceptNextAlert;
 
@@ -221,13 +210,19 @@ namespace WebAddressbookTests
             List<ContactData> contacts = new List<ContactData>();
             manager.Navigator.GoToContactPage();
             ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
-
             foreach (IWebElement element in elements)
             {
+                //var cells = elements.FindElements(By.CssSelector("td"));
                 contacts.Add(new ContactData(element.Text));
             }
             return contacts;
 
+        }
+
+        public bool IsContactPresent()
+        {
+            manager.Navigator.GoToContactPage();
+            return IsElementPresent(By.XPath("(//input[@name='selected[]'])"));
         }
     }
 }

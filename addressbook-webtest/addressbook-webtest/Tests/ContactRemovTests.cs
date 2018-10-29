@@ -14,6 +14,12 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
+            ContactData contact = new ContactData("Контакт на подхвате");
+            if (! app.Contacts.IsContactPresent())
+            {
+                app.Contacts.Create(contact);
+            }
+
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             app.Contacts.RemoveFirstContact(0);
@@ -28,6 +34,12 @@ namespace WebAddressbookTests
         [Test]
         public void DeclineContactRemovalTest()
         {
+            ContactData contact = new ContactData("Контакт на подхвате");
+            if (!app.Contacts.IsContactPresent())
+            {
+                app.Contacts.Create(contact);
+            }
+
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             app.Contacts.RemoveFirstContact(0);
