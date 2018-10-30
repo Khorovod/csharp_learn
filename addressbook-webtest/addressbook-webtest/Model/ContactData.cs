@@ -15,15 +15,20 @@ namespace WebAddressbookTests
 
         public ContactData(string firstname)
         {
-            this.firstname = firstname;
+            Firstname = firstname;
+        }
+        public ContactData(string firstname, string lastname)
+        {
+            Firstname = firstname;
+            Lastname = lastname;
         }
 
         public ContactData(string firstname, string lastname, string middlename, string photo)
         {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.middlename = middlename;
-        this.photo = photo;
+        Firstname = firstname;
+        Lastname = lastname;
+        Middlename = middlename;
+        Photo = photo;
         }
 
         public string Firstname
@@ -90,7 +95,7 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return "Firstname is" + Firstname ;
+            return "Firstname =" + Firstname + "LasTname =" + Lastname;
         }
 
         //не один хешкод
@@ -100,13 +105,19 @@ namespace WebAddressbookTests
         }
 
         public int CompareTo(ContactData other)
-        {/* в методе CompareTo надо будет сравнить сначала фамилии и если они равны,
-            то сравнить имена и возвратить результат. Иначе возвратить результат сравнения фамилий.*/
+        {/*  сравнить сначала фамилии и если они равны,
+            то сравнить имена и возвратить результат
+            Иначе возвратить результат сравнения фамилий.*/
+
             if (Object.ReferenceEquals(other, null))
             {
                 return 1;
             }
-            return Firstname.CompareTo(other.Firstname) + Lastname.CompareTo(other.Lastname);
+            if (Lastname.CompareTo(other.Lastname) == 0)
+            {
+                return Firstname.CompareTo(other.Firstname);
+            }
+            return Lastname.CompareTo(other.Lastname);
 
         }
     }

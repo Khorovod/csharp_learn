@@ -24,6 +24,7 @@ namespace WebAddressbookTests
             InitContactAddition();
             FillContactForm(contact);
             SubmitContactAddition();
+            GoToContactPage();
 
             return this;
         }
@@ -35,6 +36,7 @@ namespace WebAddressbookTests
             InitContactModification();
             FillContactForm(contact);
             SubmitContactModification();
+            GoToContactPage();
 
             return this;
         }
@@ -44,7 +46,14 @@ namespace WebAddressbookTests
             manager.Navigator.GoToContactPage();
             SelectContact(f);
             DeleteContact();
+            ApproveContactDeletion();
+            GoToContactPage();
+            return this;
+        }
 
+        public ContactHelper GoToContactPage()
+        {
+            driver.FindElement(By.LinkText("home")).Click();
             return this;
         }
    
@@ -210,10 +219,11 @@ namespace WebAddressbookTests
             List<ContactData> contacts = new List<ContactData>();
             manager.Navigator.GoToContactPage();
             ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+
             foreach (IWebElement element in elements)
             {
-                //var cells = elements.FindElements(By.CssSelector("td"));
-                contacts.Add(new ContactData(element.Text));
+                var cells = element.FindElements(By.CssSelector("td"));
+                contacts.Add(new ContactData(cells[2].Text , cells[1].Text));
             }
             return contacts;
 

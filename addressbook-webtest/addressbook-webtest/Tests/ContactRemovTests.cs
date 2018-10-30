@@ -23,33 +23,15 @@ namespace WebAddressbookTests
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             app.Contacts.RemoveFirstContact(0);
-            app.Contacts.ApproveContactDeletion();
+
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts.RemoveAt(0);
-
+            oldContacts.Sort();
+            newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
 
         }
-        [Test]
-        public void DeclineContactRemovalTest()
-        {
-            ContactData contact = new ContactData("Контакт на подхвате");
-            if (!app.Contacts.IsContactPresent())
-            {
-                app.Contacts.Create(contact);
-            }
-
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
-
-            app.Contacts.RemoveFirstContact(0);
-            app.Contacts.DeclineContactDeletion();
-
-            List<ContactData> newContacts = app.Contacts.GetContactList();
-            Assert.AreEqual(oldContacts, newContacts);
-
-        }
-
 
     }
 }
