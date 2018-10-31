@@ -22,16 +22,18 @@ namespace WebAddressbookTests
 
             ContactData newContactData = new ContactData("нИмя", "нФамилия", "нОтчество", null);
 
-            List<ContactData> oldContact = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             app.Contacts.Modify(0, newContactData);
 
+            Assert.AreEqual(oldContacts.Count , app.Contacts.GetContactCount());
+
             List<ContactData> newContact = app.Contacts.GetContactList();
-            oldContact[0].Firstname = newContactData.Firstname;
-            oldContact[0].Lastname = newContactData.Lastname;
-            oldContact.Sort();
+            oldContacts[0].Firstname = newContactData.Firstname;
+            oldContacts[0].Lastname = newContactData.Lastname;
+            oldContacts.Sort();
             newContact.Sort();
-            Assert.AreEqual(oldContact, newContact);
+            Assert.AreEqual(oldContacts, newContact);
         }
     }
 }

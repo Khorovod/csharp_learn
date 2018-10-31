@@ -78,7 +78,7 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return "name=" + Name;
+            return "Name=" + Name;
         }
 
         public override int GetHashCode()
