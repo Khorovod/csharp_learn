@@ -6,61 +6,60 @@ using System.Threading.Tasks;
 
 namespace WebAddressbookTests
 {
-    public class GroupData
+    public class GroupData : IEquatable<GroupData> , IComparable<GroupData>
     {
-        private string name;
-        private string header;
-        private string footer;
-
         public GroupData(string name)
         {
-            this.name = name;
+            Name = name;
         }
 
         public GroupData(string name, string header, string footer)
         {
-        this.name = name;
-        this.header = header;
-        this.footer = footer;
+            Name = name;
+            Header = header;
+            Footer = footer;
         }
 
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
+        public string Name { get; set; }
 
-            set
+        public string Header { get; set; }
+
+        public string Footer { get; set; }
+
+        public string Id { get; set; }
+
+
+        public bool Equals(GroupData other)
+        {
+            if (Object.ReferenceEquals(other, null))
             {
-                name = value;
+                return false;
             }
+            if (Object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
+            return Name == other.Name;
         }
 
-        public string Header
+        public override string ToString()
         {
-            get
-            {
-                return header;
-            }
-
-            set
-            {
-                header = value;
-            }
+            return "Name=" + Name;
         }
 
-        public string Footer
+        public override int GetHashCode()
         {
-            get
-            {
-                return footer;
-            }
+            return Name.GetHashCode();
+        }
 
-            set
+        public int CompareTo(GroupData other)
+        {
+            if (Object.ReferenceEquals(other, null))
             {
-                footer = value;
+                return 1;
             }
+            return Name.CompareTo(other.Name);
+                       
         }
     }
 }

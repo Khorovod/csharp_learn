@@ -24,17 +24,19 @@ namespace WebAddressbookTests
             InitContactAddition();
             FillContactForm(contact);
             SubmitContactAddition();
+            GoToContactPage();
 
             return this;
         }
 
-        public ContactHelper Modify(ContactData contact, int d)
+        public ContactHelper Modify(int d , ContactData contact)
         {
             manager.Navigator.GoToContactPage();
             SelectContact(d);
             InitContactModification();
             FillContactForm(contact);
             SubmitContactModification();
+            GoToContactPage();
 
             return this;
         }
@@ -44,7 +46,14 @@ namespace WebAddressbookTests
             manager.Navigator.GoToContactPage();
             SelectContact(f);
             DeleteContact();
+            ApproveContactDeletion();
+            GoToContactPage();
+            return this;
+        }
 
+        public ContactHelper GoToContactPage()
+        {
+            driver.FindElement(By.LinkText("home")).Click();
             return this;
         }
    
@@ -58,6 +67,7 @@ namespace WebAddressbookTests
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -152,21 +162,13 @@ namespace WebAddressbookTests
         {
             // driver.FindElement(By.XPath("(//input[@name='submit'])[1]")).Click();
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+            contactCache = null;
             return this;
         }
 
         public ContactHelper SelectContact (int index)
         {
-            if (! IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
-            {
-                ContactData contact = new ContactData("Контакт на подхвате");
-
-                InitContactAddition();
-                FillContactForm(contact);
-                SubmitContactAddition();
-                manager.Navigator.GoToContactPage();
-            }
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
 
@@ -180,17 +182,19 @@ namespace WebAddressbookTests
         {
             acceptNextAlert = true;
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            //driver.SwitchTo().Alert().Accept();
+            contactCache = null;
             return this;
         }
 
         public ContactHelper DeclineContactDeletion()
         {
+            //driver.SwitchTo().Alert().Dismiss();
             acceptNextAlert = false;
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            contactCache = null;
             return this;
         }
-
-
 
         public bool acceptNextAlert;
 
@@ -214,6 +218,38 @@ namespace WebAddressbookTests
             {
                 acceptNextAlert = true;
             }
+        }
+
+        public List<ContactData> contactCache = null;
+
+        public int GetContactCount()
+        {
+            return driver.FindElements(By.Name("entry")).Count;
+        }
+
+        public List<ContactData> GetContactList()
+        {
+            if (contactCache == null)
+            {
+                contactCache = new List<ContactData>();
+                manager.Navigator.GoToContactPage();
+                ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+                foreach (IWebElement element in elements)
+                {
+                    var cells = element.FindElements(By.CssSelector("td"));
+
+                    contactCache.Add(new ContactData(cells[2].Text, cells[1].Text) {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
+                }
+            }
+            return new List<ContactData>(contactCache);
+        }
+
+        public bool IsContactPresent()
+        {
+            manager.Navigator.GoToContactPage();
+            return IsElementPresent(By.XPath("(//input[@name='selected[]'])"));
         }
     }
 }

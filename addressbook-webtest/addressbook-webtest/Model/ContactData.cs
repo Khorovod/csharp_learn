@@ -6,75 +6,76 @@ using System.Threading.Tasks;
 
 namespace WebAddressbookTests
 {
-    public class ContactData
+    public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string firstname;
-        private string lastname;
-        private string middlename;
-        private string photo;
-
         public ContactData(string firstname)
         {
-            this.firstname = firstname;
+            Firstname = firstname;
+        }
+        public ContactData(string firstname, string lastname)
+        {
+            Firstname = firstname;
+            Lastname = lastname;
         }
 
         public ContactData(string firstname, string lastname, string middlename, string photo)
         {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.middlename = middlename;
-        this.photo = photo;
+        Firstname = firstname;
+        Lastname = lastname;
+        Middlename = middlename;
+        Photo = photo;
         }
 
-        public string Firstname
+        public string Firstname { get; set; }
+
+        public string Lastname { get; set; }
+
+        public string Middlename { get; set; }
+
+        public string Photo { get; set; }
+
+        public string Id { get; set; }
+
+        public bool Equals(ContactData other)
         {
-            get
+            if (Object.ReferenceEquals(other, null))
             {
-                return firstname;
+                return false;
             }
-
-            set
+            if (Object.ReferenceEquals(this, other))
             {
-                firstname = value;
+                return true;
             }
+            return Firstname == other.Firstname && Lastname == other.Lastname;
         }
 
-        public string Lastname
+        public override string ToString()
         {
-            get
-            {
-                return lastname;
-            }
-
-            set
-            {
-                lastname = value;
-            }
+            return "Firstname =" + Firstname + "LasTname =" + Lastname;
         }
-        public string Middlename
+
+        //не один хешкод
+        public override int  GetHashCode()
         {
-            get
-            {
-                return middlename;
-            }
-
-            set
-            {
-                middlename = value;
-            }
-        }
-        public string Photo
-        {
-            get
-            {
-                return photo;
-            }
-            set
-            {
-                photo = value;
-            }
+            return 0;
         }
 
+        public int CompareTo(ContactData other)
+        {/*  сравнить сначала фамилии и если они равны,
+            то сравнить имена и возвратить результат
+            Иначе возвратить результат сравнения фамилий.*/
+
+            if (Object.ReferenceEquals(other, null))
+            {
+                return 1;
+            }
+            if (Lastname.CompareTo(other.Lastname) == 0)
+            {
+                return Firstname.CompareTo(other.Firstname);
+            }
+            return Lastname.CompareTo(other.Lastname);
+
+        }
     }
 }
     
