@@ -36,6 +36,7 @@ namespace WebAddressbookTests
             foreach (  ContactData contact in newContacts)
             {
                 //ожидаемый результат,фактический результат
+                //
                 Assert.AreNotEqual(toRemove.Id , contact.Id );
             }
 
