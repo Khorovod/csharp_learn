@@ -37,7 +37,11 @@ namespace WebAddressbookTests
         [Test]
         public void EmptyContactCreationTest()
         {
-            ContactData contact = new ContactData("", "", "", null);
+            ContactData contact = new ContactData("", "")
+            {
+                Middlename = "",
+                Photo = null
+            };
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 

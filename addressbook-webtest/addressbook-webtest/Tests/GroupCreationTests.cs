@@ -34,7 +34,7 @@ namespace WebAddressbookTests
         [Test]
         public void EmptyGroupCreationTest()
         {
-            GroupData group = new GroupData("")
+            GroupData group = new GroupData(@"")
             {
                 Header = "",
                 Footer = ""
