@@ -182,12 +182,14 @@ namespace WebAddressbookTests
         {
             acceptNextAlert = true;
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            //driver.SwitchTo().Alert().Accept();
             contactCache = null;
             return this;
         }
 
         public ContactHelper DeclineContactDeletion()
         {
+            //driver.SwitchTo().Alert().Dismiss();
             acceptNextAlert = false;
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
             contactCache = null;
@@ -235,7 +237,10 @@ namespace WebAddressbookTests
                 foreach (IWebElement element in elements)
                 {
                     var cells = element.FindElements(By.CssSelector("td"));
-                    contactCache.Add(new ContactData(cells[2].Text, cells[1].Text));
+
+                    contactCache.Add(new ContactData(cells[2].Text, cells[1].Text) {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
                 }
             }
             return new List<ContactData>(contactCache);

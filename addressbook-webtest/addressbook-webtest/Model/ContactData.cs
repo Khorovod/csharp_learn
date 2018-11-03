@@ -8,11 +8,6 @@ namespace WebAddressbookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string firstname;
-        private string lastname;
-        private string middlename;
-        private string photo;
-
         public ContactData(string firstname)
         {
             Firstname = firstname;
@@ -31,54 +26,15 @@ namespace WebAddressbookTests
         Photo = photo;
         }
 
-        public string Firstname
-        {
-            get
-            {
-                return firstname;
-            }
+        public string Firstname { get; set; }
 
-            set
-            {
-                firstname = value;
-            }
-        }
+        public string Lastname { get; set; }
 
-        public string Lastname
-        {
-            get
-            {
-                return lastname;
-            }
+        public string Middlename { get; set; }
 
-            set
-            {
-                lastname = value;
-            }
-        }
-        public string Middlename
-        {
-            get
-            {
-                return middlename;
-            }
+        public string Photo { get; set; }
 
-            set
-            {
-                middlename = value;
-            }
-        }
-        public string Photo
-        {
-            get
-            {
-                return photo;
-            }
-            set
-            {
-                photo = value;
-            }
-        }
+        public string Id { get; set; }
 
         public bool Equals(ContactData other)
         {

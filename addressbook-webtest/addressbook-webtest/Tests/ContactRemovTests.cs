@@ -14,13 +14,14 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            ContactData contact = new ContactData("Контакт на подхвате");
+            ContactData contactData = new ContactData("Контакт на подхвате");
             if (! app.Contacts.IsContactPresent())
             {
-                app.Contacts.Create(contact);
+                app.Contacts.Create(contactData);
             }
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
+            ContactData toRemove = oldContacts[0];
 
             app.Contacts.RemoveFirstContact(0);
 
@@ -30,7 +31,13 @@ namespace WebAddressbookTests
             oldContacts.RemoveAt(0);
             oldContacts.Sort();
             newContacts.Sort();
+
             Assert.AreEqual(oldContacts, newContacts);
+            foreach (  ContactData contact in newContacts)
+            {
+                //ожидаемый результат,фактический результат
+                Assert.AreNotEqual(toRemove.Id , contact.Id );
+            }
 
         }
 
