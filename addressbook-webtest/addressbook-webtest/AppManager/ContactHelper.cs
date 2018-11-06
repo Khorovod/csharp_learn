@@ -66,6 +66,14 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper ShowContactDetails(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[6]
+                .FindElement(By.TagName("a")).Click();
+            return this;
+        }
+
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
@@ -89,6 +97,10 @@ namespace WebAddressbookTests
             Type(By.Name("home"), contact.Homephone);
             Type(By.Name("mobile"), contact.Mobilephone);
             Type(By.Name("work"), contact.Workphone);
+            Type(By.Name("email"), contact.Email);
+            Type(By.Name("email2"), contact.Email2);
+            Type(By.Name("email3"), contact.Email3);
+
 
             //driver.FindElement(By.Name("nickname")).Clear();
             //driver.FindElement(By.Name("nickname")).SendKeys("123");
@@ -102,15 +114,6 @@ namespace WebAddressbookTests
 
             driver.FindElement(By.Name("fax")).Clear();
             driver.FindElement(By.Name("fax")).SendKeys("123");
-
-            driver.FindElement(By.Name("email")).Clear();
-            driver.FindElement(By.Name("email")).SendKeys("123");
-
-            driver.FindElement(By.Name("email2")).Clear();
-            driver.FindElement(By.Name("email2")).SendKeys("123");
-
-            driver.FindElement(By.Name("email3")).Clear();
-            driver.FindElement(By.Name("email3")).SendKeys("123");
 
             driver.FindElement(By.Name("homepage")).Clear();
             driver.FindElement(By.Name("homepage")).SendKeys("123");
@@ -253,14 +256,14 @@ namespace WebAddressbookTests
             string lastname = cells[1].Text;
             string firstname = cells[2].Text;
             string adress = cells[3].Text;
+            string allemails = cells[4].Text;
             string allphones = cells[5].Text;
 
             return new ContactData(firstname, lastname)
             {
                 Adress = adress,
                 Allphones = allphones,
-
-                //emils there
+                Allemails = allemails
             };
         }
 
@@ -287,9 +290,34 @@ namespace WebAddressbookTests
                 Homephone = homephone,
                 Mobilephone = mobilephone,
                 Workphone = workphone,
-                //emils there
+                Email = email,
+                Email2 = email2,
+                Email3 = email3
             };
 
+        }
+
+        public ContactData GetContactInfoFromDetails()
+        {
+            manager.Navigator.GoToContactPage();
+            ShowContactDetails(0);
+            IList<IWebElement> block = driver.FindElements(By.Id("content"));
+            /*подумой
+            string lastname = .Text;
+            string firstname = .Text;
+            string adress = .Text;
+            string allemails = .Text;
+            string allphones = .Text;*/
+            return null;
+        }
+
+
+        public int GetNumberOfSearchResults()
+        {
+            manager.Navigator.GoToContactPage();
+            string text = driver.FindElement(By.TagName("label")).Text;
+            Match m = new Regex(@"\d+").Match(text);
+            return Int32.Parse(m.Value);
         }
 
     }

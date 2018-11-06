@@ -11,7 +11,7 @@ namespace WebAddressbookTests
     public class ContactInfoTests : AuthTestBase
     {
         [Test]
-        public void TestContactInfo()
+        public void PageAndEditorContactInfoTest()
         {
             ContactData fromPage = app.Contacts.GetContactInfoFromPage(0); 
             ContactData fromEditor = app.Contacts.GetContactInfoFromEditor(0);
@@ -22,6 +22,17 @@ namespace WebAddressbookTests
 
 
         }
+
+        [Test]
+        public void DetailsAndEditorContactInfoTest()
+        {
+            ContactData fromDetails = app.Contacts.GetContactInfoFromDetails();
+            ContactData fromEditor = app.Contacts.GetContactInfoFromEditor(0);
+
+            Assert.AreEqual(fromDetails, fromEditor);
+
+        }
+
 
     }
 }

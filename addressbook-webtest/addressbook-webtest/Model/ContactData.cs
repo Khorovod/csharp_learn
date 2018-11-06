@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allphones;
+        private string allemails;
 
         public ContactData(string firstname)
         {
@@ -38,6 +40,12 @@ namespace WebAddressbookTests
 
         public string Workphone { get;  set; }
 
+        public string Email { get; set; }
+
+        public string Email2 { get; set; }
+
+        public string Email3 { get; set; }
+
         public string Allphones
         {
             get
@@ -57,13 +65,32 @@ namespace WebAddressbookTests
             }
         }
 
-        private string CleanUp(string phone)
+        public string Allemails
         {
-            if(phone == null /*|| phone = ""*/)
+            get
+            {
+                if (allemails != null)
+                {
+                    return allemails;
+                }
+                else
+                {
+                    return CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3);
+                }
+            }
+            set
+            {
+                allemails = value;
+            }
+        }
+
+        private string CleanUp(string info)
+        {
+            if(info == null /*|| phone = ""*/)
             {
                 return "";
             }
-            return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+            return Regex.Replace(info, "[ ()-]" , "") + "\r\n";
         }
 
         public bool Equals(ContactData other)
