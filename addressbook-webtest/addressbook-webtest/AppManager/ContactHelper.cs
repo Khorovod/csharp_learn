@@ -267,6 +267,17 @@ namespace WebAddressbookTests
             };
         }
 
+        //штоже делать
+
+        public ContactData GetContactInfoFromDetails()
+        {
+            manager.Navigator.GoToContactPage();
+            ShowContactDetails(0);
+            string allinfo = driver.FindElement(By.Id("content")).Text;
+
+            return new ContactData(allinfo);
+        }
+
         public ContactData GetContactInfoFromEditor(int index)
         {
             manager.Navigator.GoToContactPage();
@@ -296,21 +307,6 @@ namespace WebAddressbookTests
             };
 
         }
-
-        public ContactData GetContactInfoFromDetails()
-        {
-            manager.Navigator.GoToContactPage();
-            ShowContactDetails(0);
-            IList<IWebElement> block = driver.FindElements(By.Id("content"));
-            /*подумой
-            string lastname = .Text;
-            string firstname = .Text;
-            string adress = .Text;
-            string allemails = .Text;
-            string allphones = .Text;*/
-            return null;
-        }
-
 
         public int GetNumberOfSearchResults()
         {

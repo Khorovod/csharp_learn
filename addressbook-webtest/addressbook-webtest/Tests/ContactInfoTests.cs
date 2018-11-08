@@ -19,6 +19,7 @@ namespace WebAddressbookTests
             Assert.AreEqual(fromPage, fromEditor);
             Assert.AreEqual(fromPage.Adress, fromEditor.Adress);
             Assert.AreEqual(fromPage.Allphones, fromEditor.Allphones);
+            Assert.AreEqual(fromPage.Allemails, fromEditor.Allemails);
 
 
         }
@@ -27,9 +28,9 @@ namespace WebAddressbookTests
         public void DetailsAndEditorContactInfoTest()
         {
             ContactData fromDetails = app.Contacts.GetContactInfoFromDetails();
-            ContactData fromEditor = app.Contacts.GetContactInfoFromEditor(0);
-
-            Assert.AreEqual(fromDetails, fromEditor);
+            //ContactData fromEditor = app.Contacts.GetContactInfoFromEditor(0);
+            System.Console.Write(fromDetails);
+            //Assert.AreEqual(fromDetails, fromEditor);
 
         }
 
