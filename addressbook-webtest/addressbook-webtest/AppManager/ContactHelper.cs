@@ -273,7 +273,7 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToContactPage();
             ShowContactDetails(0);
-            string allData = (driver.FindElement(By.Id("content")).Text).Trim();
+            string allData = driver.FindElement(By.Id("content")).Text;
 
             return new ContactData(allData);
 

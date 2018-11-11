@@ -132,7 +132,7 @@ namespace WebAddressbookTests
             return Firstname == other.Firstname && Lastname == other.Lastname;
         }
 
-       public override string ToString()
+        public override string ToString()
         {
             return "Firstname =" + Firstname + "Lastname =" + Lastname;
         }

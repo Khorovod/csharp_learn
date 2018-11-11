@@ -44,7 +44,7 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return "Name=" + Name;
+            return "name=" + Name + "\nheader =" + Header + "\nfooter =" + Footer;
         }
 
         public override int GetHashCode()
