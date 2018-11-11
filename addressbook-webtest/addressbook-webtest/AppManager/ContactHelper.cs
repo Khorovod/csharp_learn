@@ -273,9 +273,10 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToContactPage();
             ShowContactDetails(0);
-            string allinfo = driver.FindElement(By.Id("content")).Text;
+            string allData = (driver.FindElement(By.Id("content")).Text).Trim();
 
-            return new ContactData(allinfo);
+            return new ContactData(allData);
+
         }
 
         public ContactData GetContactInfoFromEditor(int index)
@@ -284,6 +285,7 @@ namespace WebAddressbookTests
             InitContactModification(0);
 
             string firstname = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string middlename = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string lastname = driver.FindElement(By.Name("lastname")).GetAttribute("value");
             string adress = driver.FindElement(By.Name("address")).GetAttribute("value");
 
@@ -297,6 +299,7 @@ namespace WebAddressbookTests
 
             return new ContactData(firstname, lastname)
             {
+                Middlename = middlename,
                 Adress = adress,
                 Homephone = homephone,
                 Mobilephone = mobilephone,

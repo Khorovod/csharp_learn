@@ -11,7 +11,7 @@ namespace WebAddressbookTests
     {
         private string allphones;
         private string allemails;
-        private string[] allinfo;
+        private string alldata;
 
         public ContactData(string firstname)
         {
@@ -21,11 +21,6 @@ namespace WebAddressbookTests
         {
             Firstname = firstname;
             Lastname = lastname;
-        }
-
-        public ContactData(string[] allinfo)
-        {
-            this.allinfo = allinfo;
         }
 
         public string Firstname { get; set; }
@@ -89,6 +84,31 @@ namespace WebAddressbookTests
                 allemails = value;
             }
         }
+        public string AllData
+        {
+            get
+            {
+                if(alldata != null || alldata == "")
+                {
+                    return alldata;
+                }
+                else
+                {
+                    return (Firstname+" " + Middlename + " " + Lastname + " \r\n"
+                       + Adress + "\r\n\r\n"
+                       + "H: " + Homephone+ "\r\n"
+                       + "M: " + Mobilephone+ "\r\n"
+                       + "W: "+ Workphone+"\r\n\r\n"
+                       + Email+ "\r\n"
+                       + Email2+ "\r\n" 
+                       + Email3+ "\r\n").Trim(); 
+                }
+            }
+            set
+            {
+                alldata = value;
+            }
+        }
 
         private string CleanUp(string info)
         {
@@ -112,10 +132,10 @@ namespace WebAddressbookTests
             return Firstname == other.Firstname && Lastname == other.Lastname;
         }
 
-       /*public override string ToString()
+       public override string ToString()
         {
             return "Firstname =" + Firstname + "Lastname =" + Lastname;
-        }*/
+        }
 
         //не один хешкод
         public override int  GetHashCode()
