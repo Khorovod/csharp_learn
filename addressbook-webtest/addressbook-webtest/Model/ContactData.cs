@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
+        private string allphones;
+        private string allemails;
+        private string alldata;
+
         public ContactData(string firstname)
         {
             Firstname = firstname;
@@ -16,14 +21,6 @@ namespace WebAddressbookTests
         {
             Firstname = firstname;
             Lastname = lastname;
-        }
-
-        public ContactData(string firstname, string lastname, string middlename, string photo)
-        {
-        Firstname = firstname;
-        Lastname = lastname;
-        Middlename = middlename;
-        Photo = photo;
         }
 
         public string Firstname { get; set; }
@@ -35,6 +32,92 @@ namespace WebAddressbookTests
         public string Photo { get; set; }
 
         public string Id { get; set; }
+
+        public string Adress { get;  set; }
+
+        public string Homephone { get;  set; }
+
+        public string Mobilephone { get;  set; }
+
+        public string Workphone { get;  set; }
+
+        public string Email { get; set; }
+
+        public string Email2 { get; set; }
+
+        public string Email3 { get; set; }
+
+        public string Allphones
+        {
+            get
+            {
+                if (allphones != null)
+                {
+                    return allphones;
+                }
+                else
+                {
+                    return (CleanUp(Homephone) + CleanUp(Mobilephone) + CleanUp(Workphone)).Trim();
+                }
+            }
+            set
+            {
+                allphones = value;
+            }
+        }
+
+        public string Allemails
+        {
+            get
+            {
+                if (allemails != null)
+                {
+                    return allemails;
+                }
+                else
+                {
+                    return (CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3)).Trim();
+                }
+            }
+            set
+            {
+                allemails = value;
+            }
+        }
+        public string AllData
+        {
+            get
+            {
+                if(alldata != null || alldata == "")
+                {
+                    return alldata;
+                }
+                else
+                {
+                    return (Firstname + " " + Middlename + " " + Lastname + "\r\n"
+                       + Adress + "\r\n\r\n"
+                       + "H: " + Homephone+ "\r\n"
+                       + "M: " + Mobilephone+ "\r\n"
+                       + "W: " + Workphone+ "\r\n\r\n"
+                       + Email+ "\r\n"
+                       + Email2+ "\r\n" 
+                       + Email3+ "\r\n").Trim(); 
+                }
+            }
+            set
+            {
+                alldata = value;
+            }
+        }
+
+        private string CleanUp(string info)
+        {
+            if (info == null || info == "")
+            {
+                return "";
+            }
+            return Regex.Replace(info, "[ ()-]" , "") + "\r\n";
+        }
 
         public bool Equals(ContactData other)
         {
@@ -51,7 +134,7 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return "Firstname =" + Firstname + "LasTname =" + Lastname;
+            return "Firstname =" + Firstname + "Lastname =" + Lastname;
         }
 
         //не один хешкод

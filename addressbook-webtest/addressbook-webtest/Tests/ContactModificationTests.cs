@@ -20,7 +20,11 @@ namespace WebAddressbookTests
                 app.Contacts.Create(contactData);
             }
 
-            ContactData newContactData = new ContactData("нИмя", "нФамилия", "нОтчество", null);
+            ContactData newContactData = new ContactData("нИмя", "нФамилия")
+            {
+                Middlename = "нОтчество",
+                Photo = null
+            };
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
             ContactData toModify = oldContacts[0];

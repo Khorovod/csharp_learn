@@ -8,6 +8,9 @@ namespace WebAddressbookTests
 {
     public class GroupData : IEquatable<GroupData> , IComparable<GroupData>
     {
+        public GroupData()
+        { }
+
         public GroupData(string name)
         {
             Name = name;
@@ -44,7 +47,7 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return "Name=" + Name;
+            return "name=" + Name + "\nheader =" + Header + "\nfooter =" + Footer;
         }
 
         public override int GetHashCode()
