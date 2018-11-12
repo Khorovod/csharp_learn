@@ -267,7 +267,7 @@ namespace WebAddressbookTests
             };
         }
 
-        //штоже делать
+        //подумать, как избавиться от обозначений телефонов
 
         public string GetContactInfoFromDetails()
         {
@@ -275,7 +275,7 @@ namespace WebAddressbookTests
             ShowContactDetails(0);
             string allData = driver.FindElement(By.Id("content")).Text;
 
-            // конструктор не подходит по смыслу
+            // сравнивать можно строку с объектом
             return allData;
 
         }
