@@ -94,11 +94,11 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (Firstname+" " + Middlename + " " + Lastname + " \r\n"
+                    return (Firstname + " " + Middlename + " " + Lastname + "\r\n"
                        + Adress + "\r\n\r\n"
                        + "H: " + Homephone+ "\r\n"
                        + "M: " + Mobilephone+ "\r\n"
-                       + "W: "+ Workphone+"\r\n\r\n"
+                       + "W: " + Workphone+ "\r\n\r\n"
                        + Email+ "\r\n"
                        + Email2+ "\r\n" 
                        + Email3+ "\r\n").Trim(); 

@@ -28,12 +28,12 @@ namespace WebAddressbookTests
         public void DetailsAndEditorContactInfoTest()
         {
             //нужно вытащить все из деталей    и склеить такое же из едитора  
-            ContactData fromDetails = app.Contacts.GetContactInfoFromDetails();
+            string  fromDetails = app.Contacts.GetContactInfoFromDetails();
             ContactData fromEditor = app.Contacts.GetContactInfoFromEditor(0);
-            System.Console.Write(fromDetails.AllData);
+            System.Console.Write(fromDetails);
             System.Console.Write(fromEditor.AllData);
 
-            Assert.AreEqual(fromDetails.AllData, fromEditor.AllData);
+            Assert.AreEqual(fromDetails, fromEditor.AllData);
 
 
         }

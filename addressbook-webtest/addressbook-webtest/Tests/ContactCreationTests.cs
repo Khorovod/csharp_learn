@@ -25,6 +25,11 @@ namespace WebAddressbookTests
             return contacts;
         }
 
+        public static IEnumerable<ContactData> ContactDataFromFile()
+        {
+            return null;
+        }
+        
         [Test, TestCaseSource ("RandomContactDataProvider")]
         public void ContactCreationTest(ContactData contact)
         {

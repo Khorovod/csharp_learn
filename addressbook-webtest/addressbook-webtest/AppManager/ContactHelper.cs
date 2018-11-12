@@ -269,13 +269,14 @@ namespace WebAddressbookTests
 
         //штоже делать
 
-        public ContactData GetContactInfoFromDetails()
+        public string GetContactInfoFromDetails()
         {
             manager.Navigator.GoToContactPage();
             ShowContactDetails(0);
             string allData = driver.FindElement(By.Id("content")).Text;
 
-            return new ContactData(allData);
+            // конструктор не подходит по смыслу
+            return allData;
 
         }
 
