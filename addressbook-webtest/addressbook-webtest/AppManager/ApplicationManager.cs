@@ -25,6 +25,7 @@ namespace WebAddressbookTests
         private ApplicationManager()
         {
             driver = new FirefoxDriver();
+            driver.Manage().Window.Maximize();
             baseURL = "http://localhost/";
 
             loginHelper = new LoginHelper(this);

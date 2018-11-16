@@ -88,17 +88,21 @@ namespace WebAddressbookTests
         {
             get
             {
-                if(alldata != null || alldata == "")
+                if(alldata != null  )
                 {
                     return alldata;
+                }
+                else if (alldata == "")
+                {
+                    return "";
                 }
                 else
                 {
                     return (Firstname + " " + Middlename + " " + Lastname + "\r\n"
                        + Adress + "\r\n\r\n"
-                       + "H: " + Homephone+ "\r\n"
-                       + "M: " + Mobilephone+ "\r\n"
-                       + "W: " + Workphone+ "\r\n\r\n"
+                       + CleanUpPhone("H: " + Homephone )
+                       + CleanUpPhone("M: " + Mobilephone )
+                       + CleanUpPhone("W: " + Workphone + "\r\n")
                        + Email+ "\r\n"
                        + Email2+ "\r\n" 
                        + Email3+ "\r\n").Trim(); 
@@ -118,6 +122,16 @@ namespace WebAddressbookTests
             }
             return Regex.Replace(info, "[ ()-]" , "") + "\r\n";
         }
+        // почему не работает?
+        private string CleanUpPhone(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return Regex.Replace(phone, "HMW :", "") + "\r\n";
+        }
+
 
         public bool Equals(ContactData other)
         {
