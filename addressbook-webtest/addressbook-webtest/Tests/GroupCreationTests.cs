@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Linq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
@@ -96,6 +97,22 @@ namespace WebAddressbookTests
             List<GroupData> newGroups = app.Groups.GetGroupsList();
 
             Assert.AreEqual(oldGroups.Count , newGroups.Count);
+        }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            DateTime start =  DateTime.Now;
+            List<GroupData> fromUi = app.Groups.GetGroupsList();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            List<GroupData> fromDb = GroupData.GettAllGroups();
+            //db.Close(); можно не использовать
+            end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
         }
     }
 }
