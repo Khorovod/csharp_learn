@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -64,14 +64,14 @@ namespace WebAddressbookTests
         [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTest(GroupData group)
         {
-            List <GroupData> oldGroups = app.Groups.GetGroupsList();
+            List <GroupData> oldGroups = GroupData.GettAllGroups();
 
             app.Groups.Create(group);
 
             //int count = app.Groups.GetGroupsCount();
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupsCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupsList();
+            List<GroupData> newGroups = GroupData.GettAllGroups();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();

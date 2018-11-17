@@ -9,7 +9,7 @@ using OpenQA.Selenium;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupRemovalTests : AuthTestBase
+    public class GroupRemovalTests : GroupTestBase
     {
         
         [Test]
@@ -23,12 +23,14 @@ namespace WebAddressbookTests
                 app.Groups.Create(groupData);
             }
 
-            List<GroupData> oldGroups = app.Groups.GetGroupsList();
+            List<GroupData> oldGroups = GroupData.GettAllGroups();
             GroupData toBeRemoved = oldGroups[0];
 
-            app.Groups.Remove(0);
+            app.Groups.Remove(toBeRemoved);
 
-            List<GroupData> newGroups = app.Groups.GetGroupsList();
+            Assert.AreEqual(oldGroups.Count - 1, app.Groups.GetGroupsCount());
+
+            List<GroupData> newGroups = GroupData.GettAllGroups();
             oldGroups.RemoveAt(0);
 
             oldGroups.Sort();
@@ -38,7 +40,7 @@ namespace WebAddressbookTests
 
             foreach (GroupData group in newGroups)
             {
-                Assert.AreNotEqual(toBeRemoved.Id , group.Id );
+                Assert.AreNotEqual(group.Id , toBeRemoved.Id );
             }
 
         }

@@ -10,7 +10,7 @@ namespace WebAddressbookTests
     public class GroupModificationTests
     {
         [TestFixture]
-        public class GroupRemovalTests : AuthTestBase
+        public class GroupRemovalTests : GroupTestBase
         {
 
             [Test]
