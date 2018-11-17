@@ -13,7 +13,7 @@ namespace WebAddressbookTests
     {
         private string allphones;
         private string allemails;
-        private string alldata;
+        private string fromEditor;
 
         public ContactData()
         {}
@@ -97,11 +97,7 @@ namespace WebAddressbookTests
         {
             get
             {
-                if (alldata != null)
-                {
-                    return alldata;
-                }
-                else if (alldata == "" )
+                if (fromEditor == "")
                 {
                     return "";
                 }
@@ -119,7 +115,7 @@ namespace WebAddressbookTests
             }
             set
             {
-                alldata = value;
+                fromEditor = value;
             }
         }
 
