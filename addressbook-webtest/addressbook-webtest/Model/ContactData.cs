@@ -97,7 +97,7 @@ namespace WebAddressbookTests
         {
             get
             {
-                if (fromEditor == "")
+                if (fromEditor == "H: \r\nM: \r\nW:")
                 {
                     return "";
                 }
