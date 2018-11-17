@@ -93,7 +93,7 @@ namespace WebAddressbookTests
             Type(By.Name("lastname"), contact.Lastname);
             Type(By.Name("middlename"), contact.Middlename);
             Type(By.Name("photo"), contact.Photo);
-            Type(By.Name("adress"), contact.Adress);
+            Type(By.Name("address"), contact.Adress);
             Type(By.Name("home"), contact.Homephone);
             Type(By.Name("mobile"), contact.Mobilephone);
             Type(By.Name("work"), contact.Workphone);
