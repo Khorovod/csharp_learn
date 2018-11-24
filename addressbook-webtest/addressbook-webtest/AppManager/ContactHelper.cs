@@ -41,6 +41,24 @@ namespace WebAddressbookTests
                 .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
 
+        public void DeleteContactFromGroup(int v, GroupData group)
+        {
+            manager.Navigator.GoToContactPage();
+            SelectGroup(group.Name);
+            SelectContact(v);
+            DeleteingContactFromGroup();
+        }
+
+        private void DeleteingContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
+        private void SelectGroup(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("qwe");
+        }
+
         private void AddingContactToGroup()
         {
             driver.FindElement(By.Name("add")).Click();
