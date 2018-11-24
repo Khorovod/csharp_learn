@@ -16,5 +16,7 @@ namespace WebAddressbookTests
         [Column(Name = "id")]
         public String ContactId { get; }
 
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
     }
 }

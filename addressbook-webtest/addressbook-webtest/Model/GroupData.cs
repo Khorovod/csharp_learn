@@ -37,6 +37,8 @@ namespace WebAddressbookTests
         [Column(Name = "group_id"), PrimaryKey, Identity]
         public string Id { get; set; }
 
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
 
         public bool Equals(GroupData other)
         {
@@ -74,7 +76,7 @@ namespace WebAddressbookTests
         {
             using (AddressBookDB db = new AddressBookDB())
             {
-                return (from g in db.Groups select g).ToList();
+                return (from g in db.Groups.Where(x => x.Deprecated == "0000-00-00 00:00:00") select g).ToList();
             }
 
         }
@@ -84,7 +86,7 @@ namespace WebAddressbookTests
             using (AddressBookDB db = new AddressBookDB())
             {
                 return (from c in db.Contacts
-                        from gcr in db.GCR.Where(p => p.GroupId == Id && p.ContactId == c.Id)
+                        from gcr in db.GCR.Where(p => p.GroupId == Id && p.ContactId == c.Id && c.Deprecated == "0000-00-00 00:00:00")
                         select c).Distinct().ToList();
             }
         }

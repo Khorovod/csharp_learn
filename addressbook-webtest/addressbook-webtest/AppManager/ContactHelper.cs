@@ -30,6 +30,32 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToContactPage();
+            ClearGroupsFilter();
+            SelectExactContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            AddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        private void AddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        private void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        private void ClearGroupsFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
         public ContactHelper Modify(int d , ContactData contact)
         {
             manager.Navigator.GoToContactPage();
@@ -51,6 +77,7 @@ namespace WebAddressbookTests
             GoToContactPage();
             return this;
         }
+
         public void RemoveFirstContact(ContactData contact)
         {
             manager.Navigator.GoToContactPage();
@@ -59,7 +86,6 @@ namespace WebAddressbookTests
             ApproveContactDeletion();
             GoToContactPage();
         }
-
 
         public ContactHelper GoToContactPage()
         {
@@ -179,6 +205,11 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" +id+ "'])")).Click();
             return this;
+        }
+
+        public void SelectExactContact(String contactId)
+        {
+            driver.FindElement(By.Id(contactId)).Click();
         }
 
         public ContactHelper DeleteContact()
