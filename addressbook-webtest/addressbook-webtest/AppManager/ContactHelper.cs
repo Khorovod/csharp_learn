@@ -51,6 +51,15 @@ namespace WebAddressbookTests
             GoToContactPage();
             return this;
         }
+        public void RemoveFirstContact(ContactData contact)
+        {
+            manager.Navigator.GoToContactPage();
+            SelectContact(contact.Id);
+            DeleteContact();
+            ApproveContactDeletion();
+            GoToContactPage();
+        }
+
 
         public ContactHelper GoToContactPage()
         {
@@ -163,6 +172,12 @@ namespace WebAddressbookTests
         public ContactHelper SelectContact (int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(String id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" +id+ "'])")).Click();
             return this;
         }
 

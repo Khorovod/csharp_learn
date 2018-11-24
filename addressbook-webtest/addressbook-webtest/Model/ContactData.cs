@@ -31,7 +31,7 @@ namespace WebAddressbookTests
         [Column(Name = "firstname")]
         public string Firstname { get; set; }
 
-        [Column(Name = "laststname")]
+        [Column(Name = "lastname")]
         public string Lastname { get; set; }
 
         [Column(Name = "middlename")]
@@ -93,6 +93,7 @@ namespace WebAddressbookTests
                 allemails = value;
             }
         }
+
         public string AllData
         {
             get
@@ -166,6 +167,15 @@ namespace WebAddressbookTests
                 return Firstname.CompareTo(other.Firstname);
             }
             return Lastname.CompareTo(other.Lastname);
+
+        }
+
+        public static List<ContactData> GettAllContacts()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts select c).ToList();
+            }
 
         }
     }

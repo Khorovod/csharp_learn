@@ -114,5 +114,15 @@ namespace WebAddressbookTests
             System.Console.Out.WriteLine(end.Subtract(start));
 
         }
+        [Test]
+        public void TestDBContactsInGroup()
+        {
+            foreach (ContactData contact in GroupData.GettAllGroups()[0].GetContactsFromGroup())
+            {
+                System.Console.Out.WriteLine(contact);
+            }
+
+        }
+
     }
 }
