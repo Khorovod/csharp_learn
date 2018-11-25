@@ -31,8 +31,8 @@ namespace WebAddressbookTests
             string  fromDetails = app.Contacts.GetContactInfoFromDetails();
             ContactData fromEditor = app.Contacts.GetContactInfoFromEditor(0);
             System.Console.Write(fromDetails);
-            System.Console.Write(fromEditor);
             System.Console.Write(fromEditor.AllData);
+
 
             Assert.AreEqual(fromDetails, fromEditor.AllData);
 
