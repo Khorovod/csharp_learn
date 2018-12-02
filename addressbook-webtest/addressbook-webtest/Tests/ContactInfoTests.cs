@@ -33,7 +33,6 @@ namespace WebAddressbookTests
             System.Console.Write(fromDetails);
             System.Console.Write(fromEditor.AllData);
 
-
             Assert.AreEqual(fromDetails, fromEditor.AllData);
 
 
