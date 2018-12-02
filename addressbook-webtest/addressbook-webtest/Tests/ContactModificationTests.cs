@@ -26,14 +26,14 @@ namespace WebAddressbookTests
                 Photo = null
             };
 
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = ContactData.GettAllContacts();
             ContactData toModify = oldContacts[0];
 
             app.Contacts.Modify(0, newContactData);
 
             Assert.AreEqual(oldContacts.Count , app.Contacts.GetContactCount());
 
-            List<ContactData> newContact = app.Contacts.GetContactList();
+            List<ContactData> newContact = ContactData.GettAllContacts();
             oldContacts[0].Firstname = newContactData.Firstname;
             oldContacts[0].Lastname = newContactData.Lastname;
 

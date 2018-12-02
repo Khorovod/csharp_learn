@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Linq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,7 @@ using Newtonsoft.Json;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -63,14 +64,14 @@ namespace WebAddressbookTests
         [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTest(GroupData group)
         {
-            List <GroupData> oldGroups = app.Groups.GetGroupsList();
+            List <GroupData> oldGroups = GroupData.GettAllGroups();
 
             app.Groups.Create(group);
 
             //int count = app.Groups.GetGroupsCount();
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupsCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupsList();
+            List<GroupData> newGroups = GroupData.GettAllGroups();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
@@ -97,5 +98,31 @@ namespace WebAddressbookTests
 
             Assert.AreEqual(oldGroups.Count , newGroups.Count);
         }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            DateTime start =  DateTime.Now;
+            List<GroupData> fromUi = app.Groups.GetGroupsList();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            List<GroupData> fromDb = GroupData.GettAllGroups();
+            //db.Close(); можно не использовать
+            end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
+        }
+        [Test]
+        public void TestDBContactsInGroup()
+        {
+            foreach (ContactData contact in GroupData.GettAllGroups()[0].GetContactsFromGroup())
+            {
+                System.Console.Out.WriteLine(contact);
+            }
+
+        }
+
     }
 }

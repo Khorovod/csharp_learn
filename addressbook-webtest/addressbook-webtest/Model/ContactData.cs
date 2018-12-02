@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using LinqToDB.Mapping;
 
 namespace WebAddressbookTests
 {
+    [Table(Name = "addressbook")]
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allphones;
         private string allemails;
-        private string alldata;
+        private string fromEditor;
 
         public ContactData()
         {}
@@ -26,14 +28,18 @@ namespace WebAddressbookTests
             Lastname = lastname;
         }
 
+        [Column(Name = "firstname")]
         public string Firstname { get; set; }
 
+        [Column(Name = "lastname")]
         public string Lastname { get; set; }
 
+        [Column(Name = "middlename")]
         public string Middlename { get; set; }
 
         public string Photo { get; set; }
 
+        [Column(Name = "id"), PrimaryKey, Identity]
         public string Id { get; set; }
 
         public string Adress { get;  set; }
@@ -49,6 +55,9 @@ namespace WebAddressbookTests
         public string Email2 { get; set; }
 
         public string Email3 { get; set; }
+
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
 
         public string Allphones
         {
@@ -87,21 +96,14 @@ namespace WebAddressbookTests
                 allemails = value;
             }
         }
+        /*
         public string AllData
         {
             get
             {
-                if (alldata != null)
+                if (fromEditor != null || fromEditor != "")
                 {
-                    return alldata;
-                }
-                else if (alldata == "" )
-                {
-                    return "";
-                }
-                else
-                {
-                    return (Firstname + " " + Middlename + " " + Lastname + "\r\n"
+                   return (Firstname + " " + Middlename + " " + Lastname + "\r\n"
                        + Adress + "\r\n\r\n"
                        + "H: " + Homephone + "\r\n"
                        + "M: " + Mobilephone + "\r\n"
@@ -110,13 +112,71 @@ namespace WebAddressbookTests
                        + Email2+ "\r\n" 
                        + Email3+ "\r\n").Trim(); 
                 }
+                else if(fromEditor == "")
+                {
+                    return "";
+                }
+                return fromEditor;
             }
             set
             {
-                alldata = value;
+                fromEditor = value;
             }
         }
+        */
 
+
+        public string AllData
+        {
+            get
+            {
+                if (Firstname != null || Firstname != "")
+                {
+                    return Firstname + " ";
+                }  
+                if (Middlename != null || Middlename != "")
+                {
+                    return Middlename + " ";
+                }
+                if (Lastname != null || Lastname != "")
+                {
+                    return Lastname + " " + "\r\n";
+                }
+                if (Adress != null || Adress != "")
+                {
+                    return Adress + "\r\n\r\n";
+                }
+                if (Homephone != null || Homephone != "")
+                {
+                    return "H: " + Homephone + "\r\n";
+                }
+                if (Mobilephone != null || Mobilephone != "")
+                {
+                    return "M: " + Mobilephone + "\r\n";
+                }
+                if (Workphone != null || Workphone != "")
+                {
+                    return "W: " + Workphone + "\r\n\r\n";
+                }
+                if (Email != null || Email != "")
+                {
+                    return Email + "\r\n";
+                }
+                if (Email2 != null || Email2 != "")
+                {
+                    return Email2 + "\r\n";
+                }
+                if (Email3 != null || Email3 != "")
+                {
+                    return Email3 + "\r\n";
+                }
+                return "";
+            }
+            set
+            {
+                fromEditor = value;
+            }
+        }
         private string CleanUp(string info)
         {
             if (info == null || info == "")
@@ -164,6 +224,15 @@ namespace WebAddressbookTests
                 return Firstname.CompareTo(other.Firstname);
             }
             return Lastname.CompareTo(other.Lastname);
+
+        }
+
+        public static List<ContactData> GettAllContacts()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts.Where(x => x.Deprecated == "0000-00-00 00:00:00") select c).ToList();
+            }
 
         }
     }

@@ -30,6 +30,50 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToContactPage();
+            ClearGroupsFilter();
+            SelectExactContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            AddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        public void DeleteContactFromGroup(int v, GroupData group)
+        {
+            manager.Navigator.GoToContactPage();
+            SelectGroup(group.Name);
+            SelectContact(v);
+            DeleteingContactFromGroup();
+        }
+
+        private void DeleteingContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
+        private void SelectGroup(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("qwe");
+        }
+
+        private void AddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        private void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        private void ClearGroupsFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
         public ContactHelper Modify(int d , ContactData contact)
         {
             manager.Navigator.GoToContactPage();
@@ -50,6 +94,15 @@ namespace WebAddressbookTests
             ApproveContactDeletion();
             GoToContactPage();
             return this;
+        }
+
+        public void RemoveFirstContact(ContactData contact)
+        {
+            manager.Navigator.GoToContactPage();
+            SelectContact(contact.Id);
+            DeleteContact();
+            ApproveContactDeletion();
+            GoToContactPage();
         }
 
         public ContactHelper GoToContactPage()
@@ -93,7 +146,7 @@ namespace WebAddressbookTests
             Type(By.Name("lastname"), contact.Lastname);
             Type(By.Name("middlename"), contact.Middlename);
             Type(By.Name("photo"), contact.Photo);
-            Type(By.Name("adress"), contact.Adress);
+            Type(By.Name("address"), contact.Adress);
             Type(By.Name("home"), contact.Homephone);
             Type(By.Name("mobile"), contact.Mobilephone);
             Type(By.Name("work"), contact.Workphone);
@@ -164,6 +217,17 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
+        }
+
+        public ContactHelper SelectContact(String id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" +id+ "'])")).Click();
+            return this;
+        }
+
+        public void SelectExactContact(String contactId)
+        {
+            driver.FindElement(By.Id(contactId)).Click();
         }
 
         public ContactHelper DeleteContact()
